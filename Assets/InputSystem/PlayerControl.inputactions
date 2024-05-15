@@ -6,7 +6,7 @@
             "id": "c5c6b678-42be-4d2a-b434-c33be0f8a227",
             "actions": [
                 {
-                    "name": "Q",
+                    "name": "MakeQ",
                     "type": "Button",
                     "id": "cc88588a-009d-48d4-8e1d-9eb0116f6f97",
                     "expectedControlType": "Button",
@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "W",
+                    "name": "MakeW",
                     "type": "Button",
                     "id": "bd285103-0aa4-4c53-90ce-5e701e718cfa",
                     "expectedControlType": "Button",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "E",
+                    "name": "MakeE",
                     "type": "Button",
                     "id": "b806976b-ed2b-433c-99bf-dad05e1d56db",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "R",
+                    "name": "MakeR",
                     "type": "Button",
                     "id": "923036fc-84dd-44a0-aa99-c0c8c9bc3519",
                     "expectedControlType": "Button",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "T",
+                    "name": "MakeT",
                     "type": "Button",
                     "id": "5bd069dd-aafa-4f2c-a31d-b7b82260c741",
                     "expectedControlType": "Button",
@@ -77,7 +77,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "Q",
+                    "action": "MakeQ",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -88,7 +88,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "W",
+                    "action": "MakeW",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -99,7 +99,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "E",
+                    "action": "MakeE",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -110,7 +110,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "R",
+                    "action": "MakeR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -121,7 +121,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Player",
-                    "action": "T",
+                    "action": "MakeT",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

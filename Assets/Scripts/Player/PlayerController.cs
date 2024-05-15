@@ -10,9 +10,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] PlayerPosition;
     private GameObject Player;
-    private int PlayerIndex;
+    public int PlayerIndex;
     public PlayerInput playerinput;
-
+    public bool CanMake;
     // Start is called before the first frame update
     private void Start()
     {
@@ -20,6 +20,17 @@ public class PlayerController : MonoBehaviour
         PlayerIndex = 0;
     }
 
+    private void Update()
+    {
+        if (PlayerIndex == 1)
+        {
+            CanMake = true;
+        }
+        else
+        {
+            CanMake = false;
+        }
+    }
     void OnNextBehavior()
     {
         if (PlayerIndex <= 1 && PlayerIndex >=0)
@@ -28,13 +39,13 @@ public class PlayerController : MonoBehaviour
             transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
         }
         else if (PlayerIndex == 2)
-        {
-            PlayerIndex = 0;
-            transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
-            
-        }
-        
-        
+             {
+                 PlayerIndex = 0;
+                 transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
+
+             }
+
+
     }
 
     void OnBeforeBehavior()
@@ -44,12 +55,13 @@ public class PlayerController : MonoBehaviour
             PlayerIndex--;
             transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
         }
+
         else if (PlayerIndex == 0)
-        {
-            PlayerIndex = 2;
-            transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
-           
-        }
+             {
+                 PlayerIndex = 2;
+                 transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
+
+             }
 
 
 
