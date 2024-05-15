@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
         {
             CanMake = false;
         }
+
     }
     void OnNextBehavior()
     {
@@ -38,12 +39,17 @@ public class PlayerController : MonoBehaviour
         {
             PlayerIndex++;
             transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
+            
+            if (PlayerIndex == 2)
+            {
+                MakeTanghulu.SetStickWithTanghulu();
+            }
         }
         else if (PlayerIndex == 2)
         {
-                 PlayerIndex = 0;
-                 transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
-
+            PlayerIndex = 0;
+            transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
+            MakeTanghulu.GetPoint();
         }
 
 
@@ -51,8 +57,5 @@ public class PlayerController : MonoBehaviour
 
    
 
-    public void MakeTanghuluStick()
-    {
-
-    }
+    
 }

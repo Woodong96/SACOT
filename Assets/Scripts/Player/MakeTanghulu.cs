@@ -9,6 +9,8 @@ public class MakeTanghulu : MonoBehaviour
     public int FruitsIndex;
     public PlayerController controller;
     public GameObject[] FruitswithStick;
+    public GameObject[] TanghuluPoints;
+    public GameObject[] Tanghulu;
     void OnMakeQ()
     {
         MakeFruit(0);
@@ -45,11 +47,15 @@ public class MakeTanghulu : MonoBehaviour
 
     void OnBeforeBehavior()
     {
-        for (int i = 0; i < FruitsIndex; i++)
+        if (controller.CanMake)
         {
-            Destroy(FruitswithStick[i]);
+            for (int i = 0; i < FruitsIndex; i++)
+            {
+                Destroy(FruitswithStick[i]);
+            }
+            FruitsIndex = 0;
         }
-        FruitsIndex = 0;
+       
 
     }
 
@@ -57,8 +63,40 @@ public class MakeTanghulu : MonoBehaviour
     {
 
         Vector3 _position = Points[_positionNum].transform.position;
+        Vector3 _position2 = TanghuluPoints[_positionNum].transform.position;
         FruitswithStick[FruitsIndex] = Instantiate(Fruits[_Fruits], _position, Quaternion.identity);
+        Tanghulu[FruitsIndex] = Instantiate(Fruits[_Fruits], _position2, Quaternion.identity);
+        Tanghulu[FruitsIndex].SetActive(false);
+    }
+
+   
+
+    public void SetStickWithTanghulu()
+    {
+        for (int i = 0; i < FruitsIndex; i++)
+        {
+            FruitswithStick[i].SetActive(false);
+            Tanghulu[i].SetActive(true);
+        }
+    }
+    public void GetPoint()
+    {
+        
+
+            for (int i = 0; i < FruitsIndex; i++)
+            {
+                Destroy(FruitswithStick[i]);
+                Destroy(Tanghulu[i]);
+            }
+            FruitsIndex = 0;
+        
 
     }
-    
+    private void Update()
+    {
+        for (int i = 0; i < FruitsIndex; i++)
+        {
+            Tanghulu[i].GetComponent<Transform>().position = TanghuluPoints[i].GetComponent<Transform>().position;
+        }
+    }
 }
