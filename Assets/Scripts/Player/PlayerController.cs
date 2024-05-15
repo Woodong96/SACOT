@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public int PlayerIndex;
     public PlayerInput playerinput;
     public bool CanMake;
+    public MakeTanghulu MakeTanghulu;
     // Start is called before the first frame update
     private void Start()
     {
@@ -39,31 +40,19 @@ public class PlayerController : MonoBehaviour
             transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
         }
         else if (PlayerIndex == 2)
-             {
+        {
                  PlayerIndex = 0;
                  transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
 
-             }
+        }
 
 
     }
 
-    void OnBeforeBehavior()
+   
+
+    public void MakeTanghuluStick()
     {
-        if (PlayerIndex <= 2 && PlayerIndex >= 1)
-        {
-            PlayerIndex--;
-            transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
-        }
-
-        else if (PlayerIndex == 0)
-             {
-                 PlayerIndex = 2;
-                 transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
-
-             }
-
-
 
     }
 }

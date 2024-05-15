@@ -6,84 +6,58 @@ public class MakeTanghulu : MonoBehaviour
 {
     public GameObject[] Fruits;
     public GameObject[] Points;
-    public int FuritsIndex;
+    public int FruitsIndex;
     public PlayerController controller;
-
+    public GameObject[] FruitswithStick;
     void OnMakeQ()
     {
-        if (controller.CanMake == true)
-        {
-            if (FuritsIndex <= 4)
-            {
-                SpawnFruits(0, FuritsIndex);
-                FuritsIndex++;
-            }
-            
-        }
-        
-
+        MakeFruit(0);
     }
 
     void OnMakeW()
     {
-        if (controller.CanMake == true)
-        {
-            if (FuritsIndex <= 4)
-            {
-                SpawnFruits(1, FuritsIndex);
-                FuritsIndex++;
-            }
-                
-        }
-            
+        MakeFruit(1);
     }
+
     void OnMakeE()
     {
-        if (controller.CanMake == true)
-        {
-            if (FuritsIndex <= 4)
-            {
-                SpawnFruits(2, FuritsIndex);
-                FuritsIndex++;
-            }
-                
-        }
-
+        MakeFruit(2);
     }
 
     void OnMakeR()
     {
-        if (controller.CanMake == true)
-        {
-            if (FuritsIndex <= 4)
-            {
-                SpawnFruits(3, FuritsIndex);
-                FuritsIndex++;
-            }
-               
-
-        }
+        MakeFruit(3);
     }
-
 
     void OnMakeT()
     {
-        if (controller.CanMake == true)
+        MakeFruit(4);
+    }
+
+    void MakeFruit(int fruitType)
+    {
+        if (controller.CanMake && FruitsIndex <= 4)
         {
-            if (FuritsIndex <= 4)
-            {
-                SpawnFruits(4, FuritsIndex);
-                FuritsIndex++;
-            }
-                
+            SpawnFruits(fruitType, FruitsIndex);
+            FruitsIndex++;
         }
+    }
+
+    void OnBeforeBehavior()
+    {
+        for (int i = 0; i < FruitsIndex; i++)
+        {
+            Destroy(FruitswithStick[i]);
+        }
+        FruitsIndex = 0;
+
     }
 
     public void SpawnFruits(int _Fruits, int _positionNum)
     {
 
         Vector3 _position = Points[_positionNum].transform.position;
-        Instantiate(Fruits[_Fruits], _position, Quaternion.identity);
+        FruitswithStick[FruitsIndex] = Instantiate(Fruits[_Fruits], _position, Quaternion.identity);
 
     }
     

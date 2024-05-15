@@ -759,6 +759,7 @@ MonoBehaviour:
   PlayerIndex: 0
   playerinput: {fileID: 1040845367}
   CanMake: 0
+  MakeTanghulu: {fileID: 1040845369}
 --- !u!114 &1040845369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,8 +784,14 @@ MonoBehaviour:
   - {fileID: 211541277}
   - {fileID: 120926472}
   - {fileID: 753900462}
-  FuritsIndex: 0
+  FruitsIndex: 0
   controller: {fileID: 1040845368}
+  FruitswithStick:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1056700909
 GameObject:
   m_ObjectHideFlags: 0
