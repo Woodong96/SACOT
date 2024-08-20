@@ -111,6 +111,7 @@ public class MakeTanghulu : MonoBehaviour
 
             _FruitsName = new string[5];  // 배열의 크기를 초기 크기로 재설정합니다.
             FruitsIndex = 0;
+            GameManager.Instance.GameScore += 100;
         }
     }
     private void Update()
