@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public PlayerInput playerinput;
     public bool CanMake;
     public MakeTanghulu MakeTanghulu;
+  
     // Start is called before the first frame update
     private void Start()
     {

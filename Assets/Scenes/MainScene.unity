@@ -865,14 +865,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 996011081826177255, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_fontSize
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 996011081826177255, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1120,6 +1112,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  customercontroller: {fileID: 2108232478}
+  _FruitsName: []
 --- !u!1 &1056700909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2318,6 +2312,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2108232478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1051160776052940708, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
+  m_PrefabInstance: {fileID: 994808277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d3376e8bb2e7f469dd1eac39eeef0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2109310353
 GameObject:
   m_ObjectHideFlags: 0

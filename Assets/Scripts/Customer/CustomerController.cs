@@ -14,6 +14,7 @@ public class CustomerController : MonoBehaviour
     public string[] FruitsName;
     void Start()
     {
+        FruitsName = new string[5];
         FruitsCount = Random.Range(1, 6);
         for (int i = 0; i < FruitsCount; i++)
         {
