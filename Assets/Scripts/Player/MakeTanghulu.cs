@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MakeTanghulu : MonoBehaviour
@@ -13,12 +14,14 @@ public class MakeTanghulu : MonoBehaviour
     public GameObject[] TanghuluPoints;
     public GameObject[] Tanghulu;
     public CustomerController customercontroller;
+    public CustomerManager customermanager;
     public string[] _FruitsName;
     public string _Fruit;
 
     public void Start()
     {
         _FruitsName = new string[5];
+        
     }
     void OnMakeQ()
     {
@@ -101,7 +104,9 @@ public class MakeTanghulu : MonoBehaviour
     public void GetPoint()
     {
         // 두 배열의 내용을 비교합니다.
-        if (customercontroller.FruitsName.SequenceEqual(_FruitsName))
+        Debug.Log("Customer FruitsName: " + string.Join(", ", GameManager.Instance.FirstCustomer.GetComponent<CustomerController>().FruitsName));
+        Debug.Log("Player FruitsName: " + string.Join(", ", _FruitsName));
+        if (GameManager.Instance.FirstCustomer.GetComponent<CustomerController>().FruitsName.SequenceEqual(_FruitsName))
         {
             for (int i = 0; i < FruitsIndex; i++)
             {
@@ -112,6 +117,8 @@ public class MakeTanghulu : MonoBehaviour
             _FruitsName = new string[5];  // 배열의 크기를 초기 크기로 재설정합니다.
             FruitsIndex = 0;
             GameManager.Instance.GameScore += 100;
+            
+            
         }
     }
     private void Update()

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private float CurrentTime;
     public TMP_Text gameScore;
     public float GameScore;
+    public GameObject[] Customer;
+    public GameObject FirstCustomer;
     public static GameManager Instance { get; private set; }
     // Start is called before the first frame update
     private void Awake()
@@ -26,11 +28,14 @@ public class GameManager : MonoBehaviour
            
             Destroy(gameObject);
         }
+
+        
     }
     void Start()
     {
         CurrentTime = 0;
         GameScore = 0;
+        
     }
 
     // Update is called once per frame

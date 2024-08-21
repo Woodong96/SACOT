@@ -76,4 +76,9 @@ public class CustomerController : MonoBehaviour
         }
         Want.text = sb.ToString();
     }
+
+    public void DeletCustomer()
+    {
+        Destroy(this);
+    }
 }

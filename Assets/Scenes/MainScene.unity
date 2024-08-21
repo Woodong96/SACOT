@@ -889,70 +889,6 @@ Transform:
   m_Father: {fileID: 1134609776}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &994808277
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1663253139255367316, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4702477665077435138, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      propertyPath: m_Name
-      value: Customer
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3829981152944036530, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-  m_SourcePrefab: {fileID: 100100000, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
 --- !u!224 &1004319371 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6547508428460211392, guid: da2e4039b8d95fd4fb922101c4ca7c8a, type: 3}
@@ -1144,7 +1080,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  customercontroller: {fileID: 2108232478}
+  customercontroller: {fileID: 1051160776052940708, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
+  customermanager: {fileID: 1999998222}
   _FruitsName: []
   _Fruit: 
 --- !u!1 &1056700909
@@ -1578,6 +1515,8 @@ MonoBehaviour:
   currentTime: {fileID: 2049966931}
   gameScore: {fileID: 1077206669}
   GameScore: 0
+  Customer: []
+  FirstCustomer: {fileID: 0}
 --- !u!1 &1314490963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2483,17 +2422,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2108232478 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1051160776052940708, guid: 922d4bcb64358ed4c982d5acfa0ebbdf, type: 3}
-  m_PrefabInstance: {fileID: 994808277}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d3376e8bb2e7f469dd1eac39eeef0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2109310353
 GameObject:
   m_ObjectHideFlags: 0
