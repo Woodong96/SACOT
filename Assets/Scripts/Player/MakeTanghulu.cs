@@ -117,7 +117,10 @@ public class MakeTanghulu : MonoBehaviour
             FruitsIndex = 0;
             GameManager.Instance.GameScore += 100;
             GameManager.Instance.ChangeFirstCustomer();
-
+            if (GameManager.Instance.Customer[0] == null)
+            {
+                PlayerFaceManager.Instance.NiceFace(true);
+            }
         }
         else
         {
@@ -130,6 +133,7 @@ public class MakeTanghulu : MonoBehaviour
             FruitsIndex = 0;
             GameManager.Instance.GameScore -= 50;
             GameManager.Instance.ChangeFirstCustomer();
+            PlayerFaceManager.Instance.SadFace(true);
         }
     }
    

@@ -16,35 +16,38 @@ public class CustomerManager : MonoBehaviour
     void Update()
     {
         currTime += Time.deltaTime;
-
-        if (currTime > 2)
+        if (GameManager.Instance.Customer[4] == null)
         {
-            Vector3 _position = CustomerPoints.transform.position;
-            GameObject customer = Instantiate(Customer, _position, Quaternion.identity); // customer 按眉 积己
-            
-            currTime = 0;
+            if (currTime > 2)
+            {
+                Vector3 _position = CustomerPoints.transform.position;
+                GameObject customer = Instantiate(Customer, _position, Quaternion.identity); // customer 按眉 积己
 
-            if (GameManager.Instance.Customer[0] == null)
-            {
-                GameManager.Instance.Customer[0] = customer; // 橇府普栏肺 积己等 按眉 且寸
-               
-            }
-            else if (GameManager.Instance.Customer[1] == null)
-            {
-                GameManager.Instance.Customer[1] = customer;
-            }
-            else if (GameManager.Instance.Customer[2] == null)
-            {
-                GameManager.Instance.Customer[2] = customer;
-            }
-            else if (GameManager.Instance.Customer[3] == null)
-            {
-                GameManager.Instance.Customer[3] = customer;
-            }
-            else if (GameManager.Instance.Customer[4] == null)
-            {
-                GameManager.Instance.Customer[4] = customer;
+                currTime = 0;
+
+                if (GameManager.Instance.Customer[0] == null)
+                {
+                    GameManager.Instance.Customer[0] = customer; // 橇府普栏肺 积己等 按眉 且寸
+
+                }
+                else if (GameManager.Instance.Customer[1] == null)
+                {
+                    GameManager.Instance.Customer[1] = customer;
+                }
+                else if (GameManager.Instance.Customer[2] == null)
+                {
+                    GameManager.Instance.Customer[2] = customer;
+                }
+                else if (GameManager.Instance.Customer[3] == null)
+                {
+                    GameManager.Instance.Customer[3] = customer;
+                }
+                else if (GameManager.Instance.Customer[4] == null)
+                {
+                    GameManager.Instance.Customer[4] = customer;
+                }
             }
         }
+      
     }
 }

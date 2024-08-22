@@ -52,8 +52,11 @@ public class PlayerController : MonoBehaviour
             PlayerIndex = 0;
             transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
     
-            
-            MakeTanghulu.GetPoint();
+            if (GameManager.Instance.FirstCustomer != null)
+            {
+                MakeTanghulu.GetPoint();
+            }
+           
          
         }
 
