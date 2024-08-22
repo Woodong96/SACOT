@@ -10,13 +10,13 @@ public class CustomerManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.Customer = new GameObject[5]; // 배열 초기화
+        GameManager.Instance.Customer = new GameObject[4]; // 배열 초기화
     }
 
     void Update()
     {
         currTime += Time.deltaTime;
-        if (GameManager.Instance.Customer[4] == null)
+        if (GameManager.Instance.Customer[3] == null)
         {
             if (currTime > 2)
             {
@@ -42,10 +42,7 @@ public class CustomerManager : MonoBehaviour
                 {
                     GameManager.Instance.Customer[3] = customer;
                 }
-                else if (GameManager.Instance.Customer[4] == null)
-                {
-                    GameManager.Instance.Customer[4] = customer;
-                }
+             
             }
         }
       

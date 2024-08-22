@@ -120,6 +120,7 @@ public class MakeTanghulu : MonoBehaviour
             if (GameManager.Instance.Customer[0] == null)
             {
                 PlayerFaceManager.Instance.NiceFace(true);
+                GameManager.Instance.GameScore += 20;
             }
         }
         else

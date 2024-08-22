@@ -9,6 +9,7 @@ public class PlayerFaceManager : MonoBehaviour
     public GameObject _SadFace;
     public GameObject _NiceFace;
     private Coroutine _currentCoroutine; // 현재 실행 중인 코루틴을 추적하기 위한 변수
+    private string _currentFaceState = "Normal"; // 현재 활성화된 얼굴 상태를 추적
     // Start is called before the first frame update
     private void Awake()
     {
@@ -28,42 +29,52 @@ public class PlayerFaceManager : MonoBehaviour
 
     }
 
-   
+
+
+
 
     public void NiceFace(bool Face)
     {
-        if (_currentCoroutine != null)
+        // 새로운 상태가 이전 상태와 다르면 기존 코루틴 중지
+        if (_currentFaceState != "NiceFace" && _currentCoroutine != null)
         {
-            StopCoroutine(_currentCoroutine); // 이전 코루틴이 있으면 중지
+            StopCoroutine(_currentCoroutine);
         }
 
         _NiceFace.SetActive(Face);
         _Normalface.SetActive(!Face);
+        _SadFace.SetActive(false);
 
-        _currentCoroutine = StartCoroutine(ResetFacesAfterDelay(_NiceFace, _Normalface, Face));
+        _currentFaceState = "NiceFace";
+        _currentCoroutine = StartCoroutine(ResetFacesAfterDelay());
     }
 
     public void SadFace(bool Face)
     {
-        if (_currentCoroutine != null)
+        // 새로운 상태가 이전 상태와 다르면 기존 코루틴 중지
+        if (_currentFaceState != "SadFace" && _currentCoroutine != null)
         {
-            StopCoroutine(_currentCoroutine); // 이전 코루틴이 있으면 중지
+            StopCoroutine(_currentCoroutine);
         }
 
         _SadFace.SetActive(Face);
         _Normalface.SetActive(!Face);
+        _NiceFace.SetActive(false);
 
-        _currentCoroutine = StartCoroutine(ResetFacesAfterDelay(_SadFace, _Normalface, Face));
+        _currentFaceState = "SadFace";
+        _currentCoroutine = StartCoroutine(ResetFacesAfterDelay());
     }
 
-    private IEnumerator ResetFacesAfterDelay(GameObject face, GameObject normalFace, bool initialState)
+    private IEnumerator ResetFacesAfterDelay()
     {
         yield return new WaitForSeconds(2f);
 
-        face.SetActive(!initialState);
-        normalFace.SetActive(initialState);
+        _NiceFace.SetActive(false);
+        _SadFace.SetActive(false);
+        _Normalface.SetActive(true);
 
-        _currentCoroutine = null; // 코루틴이 끝나면 null로 초기화
+        _currentFaceState = "Normal"; // 상태를 Normal로 리셋
+        _currentCoroutine = null; // 코루틴 초기화
     }
 
 }

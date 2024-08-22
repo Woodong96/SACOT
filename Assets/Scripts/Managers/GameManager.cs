@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        CurrentTime = 0;
+        CurrentTime = 60;
         GameScore = 0;
        
     }
@@ -41,14 +41,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CurrentTime += Time.deltaTime;
-        currentTime.text = CurrentTime.ToString("F2");
+        CurrentTime -= Time.deltaTime;
+        currentTime.text = CurrentTime.ToString("F1");
 
-        gameScore.text = GameScore.ToString("F2");
+        gameScore.text = GameScore.ToString("F0");
         if (FirstCustomer == null)
         {
             FirstCustomer = Customer[0];
         }
+        if (CurrentTime == 0)
+        {
+            EndGame();
+        }
+        
         
     }
 
@@ -59,8 +64,15 @@ public class GameManager : MonoBehaviour
             Customer[0] = Customer[1];
             Customer[1] = Customer[2];
             Customer[2] = Customer[3];
-            Customer[3] = Customer[4];
-        
-        
+
+
+
     }
+
+    public void EndGame()
+    {
+        Time.timeScale = 0;
+
+    }
+
 }
