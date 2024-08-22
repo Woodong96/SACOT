@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentTime = 0;
         GameScore = 0;
-        
+       
     }
 
     // Update is called once per frame
@@ -45,5 +45,22 @@ public class GameManager : MonoBehaviour
         currentTime.text = CurrentTime.ToString("F2");
 
         gameScore.text = GameScore.ToString("F2");
+        if (FirstCustomer == null)
+        {
+            FirstCustomer = Customer[0];
+        }
+        
+    }
+
+    public void ChangeFirstCustomer()
+    {
+        Destroy(FirstCustomer);
+       
+            Customer[0] = Customer[1];
+            Customer[1] = Customer[2];
+            Customer[2] = Customer[3];
+            Customer[3] = Customer[4];
+        
+        
     }
 }

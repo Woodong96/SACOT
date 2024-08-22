@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -50,7 +51,10 @@ public class PlayerController : MonoBehaviour
         {
             PlayerIndex = 0;
             transform.position = PlayerPosition[PlayerIndex].GetComponent<Transform>().position;
+    
+            
             MakeTanghulu.GetPoint();
+         
         }
 
 

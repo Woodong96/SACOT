@@ -27,7 +27,7 @@ public class CustomerManager : MonoBehaviour
             if (GameManager.Instance.Customer[0] == null)
             {
                 GameManager.Instance.Customer[0] = customer; // 프리팹으로 생성된 객체 할당
-                GameManager.Instance.FirstCustomer = customer;
+               
             }
             else if (GameManager.Instance.Customer[1] == null)
             {
