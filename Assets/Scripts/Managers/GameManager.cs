@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text currentTime;
     public float CurrentTime;
     public TMP_Text gameScore;
-    public float GameScore;
+    public int GameScore;
     public GameObject[] Customer;
     public GameObject FirstCustomer;
     public static GameManager Instance { get; private set; }
@@ -33,8 +33,10 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        CurrentTime = 200;
+        LoadFinalScore();
+        CurrentTime = 5;
         GameScore = 0;
+        Time.timeScale = 1;
        
     }
 
@@ -52,12 +54,24 @@ public class GameManager : MonoBehaviour
         }
         if (CurrentTime <= 0)
         {
+            CurrentTime = 0; 
             EndGame();
         }
-        
-        
-    }
 
+
+    }
+    void SaveFinalScore(int score)
+    {
+        
+        if (PlayerPrefs.GetInt("FinalScore") == null || PlayerPrefs.GetInt("FinalScore") < score)
+        {
+            PlayerPrefs.SetInt("FinalScore", score); // "FinalScore"라는 키로 스코어 저장
+            PlayerPrefs.Save(); // 데이터를 디스크에 저장
+        }
+
+
+
+    }
     public void ChangeFirstCustomer()
     {
         Destroy(FirstCustomer);
@@ -70,10 +84,31 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void EndGame()
+    void LoadFinalScore()
     {
-        Time.timeScale = 0;
-
+        if (PlayerPrefs.HasKey("FinalScore"))
+        {
+            GameScore = PlayerPrefs.GetInt("FinalScore");
+            Debug.Log("Final Score Loaded: " + GameScore);
+        }
+        else
+        {
+            GameScore = 0; // 저장된 스코어가 없을 경우 초기화
+        }
     }
+
+    public void EndGame()
+    { 
+        {
+            Time.timeScale = 0;
+            SaveFinalScore(GameScore);
+            Debug.Log(PlayerPrefs.GetInt("FinalScore"));
+            AudioManager.Instance.StopBGM();
+            Debug.Log(PlayerPrefs.GetInt("FinalScore"));
+            UIManager.Instance.PopUpEnding(true);
+            Debug.Log(PlayerPrefs.GetInt("FinalScore"));
+        }
+    }
+
 
 }

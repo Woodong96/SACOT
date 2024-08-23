@@ -25,7 +25,7 @@ public class CustomerManager : MonoBehaviour
             else if(GameManager.Instance.CurrentTime < 60)
             {
                 SpawnCustomer(2);
-                AudioManager.Instance.PlayBGM(2);
+               
             }
             else if(GameManager.Instance.CurrentTime < 100)
             {

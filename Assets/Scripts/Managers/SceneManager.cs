@@ -8,13 +8,16 @@ public class BtnManager : MonoBehaviour
     // Start is called before the first frame update
    
     
-    public void StartScene()
+    public void MaintScene()
     {
 
 
         SceneManager.LoadScene("MainScene");
     }
 
-
+    public void StartScene()
+    {
+        SceneManager.LoadScene("StartScene");
+    }
 
 }
