@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LoadFinalScore();
-        CurrentTime = 5;
+        CurrentTime = 300;
         GameScore = 0;
         Time.timeScale = 1;
        
