@@ -121,6 +121,10 @@ public class MakeTanghulu : MonoBehaviour
             {
                 PlayerFaceManager.Instance.NiceFace(true);
                 GameManager.Instance.GameScore += 20;
+                GameManager.Instance.CurrentTime += 20f;
+                Time.timeScale += 0.3f;
+                AudioManager.Instance.PlaySFX(0);
+
             }
         }
         else
@@ -133,8 +137,11 @@ public class MakeTanghulu : MonoBehaviour
             _FruitsName = new string[5];  // 배열의 크기를 초기 크기로 재설정합니다.
             FruitsIndex = 0;
             GameManager.Instance.GameScore -= 50;
+            GameManager.Instance.CurrentTime -= 0.5f;
             GameManager.Instance.ChangeFirstCustomer();
             PlayerFaceManager.Instance.SadFace(true);
+            Time.timeScale += 0.5f;
+            AudioManager.Instance.PlaySFX(1);
         }
     }
    

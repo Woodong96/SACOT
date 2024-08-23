@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public TMP_Text currentTime;
-    private float CurrentTime;
+    public float CurrentTime;
     public TMP_Text gameScore;
     public float GameScore;
     public GameObject[] Customer;
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        CurrentTime = 60;
+        CurrentTime = 200;
         GameScore = 0;
        
     }
@@ -43,13 +43,14 @@ public class GameManager : MonoBehaviour
     {
         CurrentTime -= Time.deltaTime;
         currentTime.text = CurrentTime.ToString("F1");
+        
 
         gameScore.text = GameScore.ToString("F0");
         if (FirstCustomer == null)
         {
             FirstCustomer = Customer[0];
         }
-        if (CurrentTime == 0)
+        if (CurrentTime <= 0)
         {
             EndGame();
         }

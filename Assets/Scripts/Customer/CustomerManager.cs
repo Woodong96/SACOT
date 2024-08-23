@@ -18,33 +18,59 @@ public class CustomerManager : MonoBehaviour
         currTime += Time.deltaTime;
         if (GameManager.Instance.Customer[3] == null)
         {
-            if (currTime > 2)
+            if (GameManager.Instance.CurrentTime < 30)
             {
-                Vector3 _position = CustomerPoints.transform.position;
-                GameObject customer = Instantiate(Customer, _position, Quaternion.identity); // customer 按眉 积己
-
-                currTime = 0;
-
-                if (GameManager.Instance.Customer[0] == null)
-                {
-                    GameManager.Instance.Customer[0] = customer; // 橇府普栏肺 积己等 按眉 且寸
-
-                }
-                else if (GameManager.Instance.Customer[1] == null)
-                {
-                    GameManager.Instance.Customer[1] = customer;
-                }
-                else if (GameManager.Instance.Customer[2] == null)
-                {
-                    GameManager.Instance.Customer[2] = customer;
-                }
-                else if (GameManager.Instance.Customer[3] == null)
-                {
-                    GameManager.Instance.Customer[3] = customer;
-                }
-             
+                SpawnCustomer(1);
             }
+            else if(GameManager.Instance.CurrentTime < 60)
+            {
+                SpawnCustomer(2);
+                AudioManager.Instance.PlayBGM(2);
+            }
+            else if(GameManager.Instance.CurrentTime < 100)
+            {
+                
+                SpawnCustomer(3);
+                AudioManager.Instance.PlayBGM(1);
+            }
+            else if (GameManager.Instance.CurrentTime < 3000)
+            {
+                SpawnCustomer(4);
+                
+            }
+
+
         }
-      
+
+
+    }
+    void SpawnCustomer(float _time)
+    {
+        if (currTime > _time)
+        {
+            Vector3 _position = CustomerPoints.transform.position;
+            GameObject customer = Instantiate(Customer, _position, Quaternion.identity); // customer 按眉 积己
+
+            currTime = 0;
+
+            if (GameManager.Instance.Customer[0] == null)
+            {
+                GameManager.Instance.Customer[0] = customer; // 橇府普栏肺 积己等 按眉 且寸
+
+            }
+            else if (GameManager.Instance.Customer[1] == null)
+            {
+                GameManager.Instance.Customer[1] = customer;
+            }
+            else if (GameManager.Instance.Customer[2] == null)
+            {
+                GameManager.Instance.Customer[2] = customer;
+            }
+            else if (GameManager.Instance.Customer[3] == null)
+            {
+                GameManager.Instance.Customer[3] = customer;
+            }
+
+        }
     }
 }
