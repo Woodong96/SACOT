@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>목소리 거짓말탐지기</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#1a1d24; --text:#eef0f4; --muted:#9aa3b2;
+    --accent:#4f8cff; --ok:#2ecc71; --warn:#f1c40f; --bad:#e74c3c; --line:#2a2f3a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+  main{max-width:480px;margin:0 auto;padding:20px 16px 40px}
+  h1{font-size:22px;margin:4px 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+  .step{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.05em}
+  .q{font-size:18px;font-weight:600;margin:6px 0 12px;line-height:1.4}
+  input[type=text]{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);
+    background:#11141a;color:var(--text);font-size:16px;margin-bottom:10px}
+  button{width:100%;padding:16px;border:0;border-radius:12px;font-size:17px;font-weight:700;
+    background:var(--accent);color:#fff;cursor:pointer}
+  button:disabled{opacity:.4}
+  button.rec{background:var(--bad);animation:pulse 1s infinite}
+  button.ghost{background:transparent;border:1px solid var(--line);color:var(--muted);margin-top:8px}
+  @keyframes pulse{50%{opacity:.75}}
+  canvas{width:100%;height:80px;display:block;background:#11141a;border-radius:10px;margin:10px 0}
+  .timer{text-align:center;color:var(--muted);font-variant-numeric:tabular-nums;font-size:13px;min-height:18px}
+  .gauge{position:relative;height:18px;border-radius:9px;
+    background:linear-gradient(90deg,var(--ok),var(--warn),var(--bad));margin:14px 0 6px}
+  .needle{position:absolute;top:-6px;width:4px;height:30px;background:#fff;border-radius:2px;
+    left:0;transition:left 1.2s cubic-bezier(.2,.9,.2,1.2)}
+  .scale{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+  .verdict{font-size:28px;font-weight:800;text-align:center;margin:12px 0 2px}
+  .pct{text-align:center;color:var(--muted);margin-bottom:10px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  td{padding:6px 2px;border-bottom:1px solid var(--line)}
+  td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  .hidden{display:none}
+  .note{color:var(--muted);font-size:12px;line-height:1.5}
+  .err{color:var(--bad);font-size:14px}
+  ul.hist{list-style:none;padding:0;margin:0}
+  ul.hist li{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+</style>
+</head>
+<body>
+<main>
+  <h1>🎙️ 목소리 거짓말탐지기</h1>
+  <p class="sub">목소리의 떨림·높낮이·머뭇거림을 분석해요 (재미용)</p>
+
+  <!-- 1단계: 기준 측정 -->
+  <section class="card" id="calib">
+    <div class="step">STEP 1 · 기준 목소리 측정</div>
+    <div class="q">편하게 진실을 말해주세요.<br>“제 이름은 ○○이고, 오늘 날씨는 ○○입니다.”</div>
+    <canvas id="wave1"></canvas>
+    <div class="timer" id="t1"></div>
+    <button id="btnCalib">🎤 녹음 시작 (5초)</button>
+    <p class="err hidden" id="err"></p>
+  </section>
+
+  <!-- 2단계: 질문 -->
+  <section class="card hidden" id="test">
+    <div class="step">STEP 2 · 질문하기</div>
+    <input type="text" id="question" placeholder="질문을 입력하세요 (예: 내 과자 먹었어?)">
+    <canvas id="wave2"></canvas>
+    <div class="timer" id="t2"></div>
+    <button id="btnTest">🎤 대답 녹음 (최대 8초)</button>
+    <button class="ghost" id="btnRecalib">기준 다시 측정</button>
+  </section>
+
+  <!-- 결과 -->
+  <section class="card hidden" id="result">
+    <div class="step">결과</div>
+    <div class="gauge"><div class="needle" id="needle"></div></div>
+    <div class="scale"><span>진실</span><span>애매</span><span>거짓</span></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="pct" id="pct"></div>
+    <table id="detail"></table>
+  </section>
+
+  <section class="card hidden" id="history">
+    <div class="step">기록</div>
+    <ul class="hist" id="histList"></ul>
+  </section>
+
+  <p class="note">⚠️ 이 앱은 오락용입니다. 음성 스트레스 분석은 과학적으로 거짓말을 판별할 수 없으며,
+  긴장·감기·주변 소음 등으로도 결과가 바뀝니다. 실제 판단에 사용하지 마세요.
+  모든 분석은 기기 안에서만 이뤄지고 녹음은 저장·전송되지 않아요.</p>
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let ctx, analyser, stream, buf;
+  let baseline = null;
+  const history = [];
+
+  // ---------- 오디오 ----------
+  async function ensureMic() {
+    if (analyser) { if (ctx.state === 'suspended') await ctx.resume(); return; }
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+    });
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const src = ctx.createMediaStreamSource(stream);
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 2048;
+    src.connect(analyser);
+    buf = new Float32Array(analyser.fftSize);
+  }
+
+  // 자기상관 기반 피치 검출 (70~450Hz)
+  function detectPitch(data, sr) {
+    const n = data.length;
+    let rms = 0;
+    for (let i = 0; i < n; i++) rms += data[i] * data[i];
+    rms = Math.sqrt(rms / n);
+    if (rms < 0.01) return { rms, pitch: 0 };
+    const minLag = Math.floor(sr / 450), maxLag = Math.floor(sr / 70);
+    let best = -1, bestLag = 0, r0 = 0;
+    for (let i = 0; i < n - maxLag; i++) r0 += data[i] * data[i];
+    for (let lag = minLag; lag <= maxLag; lag++) {
+      let s = 0;
+      for (let i = 0; i < n - maxLag; i++) s += data[i] * data[i + lag];
+      if (s > best) { best = s; bestLag = lag; }
+    }
+    const clarity = best / (r0 || 1);
+    if (clarity < 0.5) return { rms, pitch: 0 };
+    return { rms, pitch: sr / bestLag };
+  }
+
+  function drawWave(canvas, data) {
+    const c = canvas.getContext('2d');
+    const w = canvas.width = canvas.clientWidth * devicePixelRatio;
+    const h = canvas.height = canvas.clientHeight * devicePixelRatio;
+    c.clearRect(0, 0, w, h);
+    c.strokeStyle = '#4f8cff'; c.lineWidth = 2 * devicePixelRatio;
+    c.beginPath();
+    for (let i = 0; i < data.length; i += 4) {
+      const x = i / data.length * w, y = h / 2 + data[i] * h * 1.5;
+      i ? c.lineTo(x, y) : c.moveTo(x, y);
+    }
+    c.stroke();
+  }
+
+  // 녹음하면서 프레임별 특징 수집
+  function record(seconds, canvas, timerEl, stopOnSilence) {
+    return new Promise(resolve => {
+      const frames = [];
+      const t0 = performance.now();
+      let lastVoice = 0, started = false;
+      const tick = () => {
+        const t = (performance.now() - t0) / 1000;
+        analyser.getFloatTimeDomainData(buf);
+        drawWave(canvas, buf);
+        const f = detectPitch(buf, ctx.sampleRate);
+        frames.push({ t, ...f });
+        if (f.rms > 0.02) { started = true; lastVoice = t; }
+        timerEl.textContent = `${t.toFixed(1)}s / ${seconds}s`;
+        const silentEnd = stopOnSilence && started && t - lastVoice > 1.5 && t > 2;
+        if (t >= seconds || silentEnd) { timerEl.textContent = ''; resolve(frames); }
+        else requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
+  // ---------- 특징 추출 ----------
+  const mean = a => a.reduce((s, x) => s + x, 0) / (a.length || 1);
+  const std = a => { const m = mean(a); return Math.sqrt(mean(a.map(x => (x - m) ** 2))); };
+
+  function features(frames) {
+    const rmsAll = frames.map(f => f.rms);
+    const noise = Math.max(0.01, [...rmsAll].sort((a, b) => a - b)[Math.floor(rmsAll.length * 0.1)] * 2);
+    const voiced = frames.filter(f => f.rms > noise);
+    const pitched = frames.filter(f => f.pitch > 0 && f.rms > noise).map(f => f.pitch);
+    // 지터: 연속 프레임 간 피치 변화율
+    const jit = [];
+    for (let i = 1; i < frames.length; i++) {
+      const a = frames[i - 1].pitch, b = frames[i].pitch;
+      if (a > 0 && b > 0 && Math.abs(a - b) / a < 0.3) jit.push(Math.abs(a - b) / a);
+    }
+    const firstVoice = frames.find(f => f.rms > noise);
+    const lastVoiceIdx = frames.map(f => f.rms > noise).lastIndexOf(true);
+    const span = frames.slice(frames.indexOf(firstVoice), lastVoiceIdx + 1);
+    const pauses = span.filter(f => f.rms <= noise).length / (span.length || 1);
+    const vol = voiced.map(f => f.rms);
+    return {
+      ok: pitched.length > 15,
+      pitch: mean(pitched),
+      pitchVar: std(pitched) / (mean(pitched) || 1),
+      jitter: mean(jit),
+      volVar: std(vol) / (mean(vol) || 1),
+      latency: firstVoice ? firstVoice.t : 0,
+      pause: pauses
+    };
+  }
+
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+
+  function score(b, t) {
+    const parts = [
+      ['목소리 높이 변화', clamp((t.pitch - b.pitch) / b.pitch * 250, -12, 28), `${b.pitch.toFixed(0)} → ${t.pitch.toFixed(0)} Hz`],
+      ['떨림 (지터)',      clamp((t.jitter / (b.jitter || 1e-3) - 1) * 25, -10, 22), `${(b.jitter*100).toFixed(2)} → ${(t.jitter*100).toFixed(2)} %`],
+      ['억양 흔들림',      clamp((t.pitchVar / (b.pitchVar || 1e-3) - 1) * 20, -8, 15), `${(b.pitchVar*100).toFixed(1)} → ${(t.pitchVar*100).toFixed(1)} %`],
+      ['음량 불안정',      clamp((t.volVar / (b.volVar || 1e-3) - 1) * 15, -6, 10), `${(b.volVar*100).toFixed(0)} → ${(t.volVar*100).toFixed(0)} %`],
+      ['대답 머뭇거림',    clamp((t.latency - b.latency) * 8, -5, 15), `${b.latency.toFixed(1)} → ${t.latency.toFixed(1)} 초`],
+      ['말 끊김',          clamp((t.pause - b.pause) * 50, -5, 12), `${(b.pause*100).toFixed(0)} → ${(t.pause*100).toFixed(0)} %`],
+    ];
+    const total = clamp(Math.round(30 + parts.reduce((s, p) => s + p[1], 0)), 3, 97);
+    return { total, parts };
+  }
+
+  // ---------- UI ----------
+  function showErr(msg) { $('err').textContent = msg; $('err').classList.remove('hidden'); }
+
+  $('btnCalib').onclick = async () => {
+    $('err').classList.add('hidden');
+    try { await ensureMic(); }
+    catch (e) { return showErr('마이크 권한이 필요해요. 브라우저 설정에서 허용해 주세요. (https 주소에서만 작동)'); }
+    const btn = $('btnCalib');
+    btn.disabled = true; btn.classList.add('rec'); btn.textContent = '● 말하는 중...';
+    const frames = await record(5, $('wave1'), $('t1'), false);
+    btn.disabled = false; btn.classList.remove('rec'); btn.textContent = '🎤 다시 측정';
+    const f = features(frames);
+    if (!f.ok) return showErr('목소리가 잘 안 들렸어요. 조금 더 크게, 계속 말해주세요.');
+    baseline = f;
+    $('calib').classList.add('hidden');
+    $('test').classList.remove('hidden');
+  };
+
+  $('btnRecalib').onclick = () => {
+    $('test').classList.add('hidden'); $('result').classList.add('hidden');
+    $('calib').classList.remove('hidden');
+    $('btnCalib').textContent = '🎤 녹음 시작 (5초)';
+  };
+
+  $('btnTest').onclick = async () => {
+    await ensureMic();
+    const btn = $('btnTest');
+    btn.disabled = true; btn.classList.add('rec'); btn.textContent = '● 대답하세요...';
+    const frames = await record(8, $('wave2'), $('t2'), true);
+    btn.disabled = false; btn.classList.remove('rec'); btn.textContent = '🎤 다음 질문 대답 녹음';
+    const f = features(frames);
+    if (!f.ok) { alert('대답이 너무 짧거나 작아요. 다시 해주세요.'); return; }
+    const { total, parts } = score(baseline, f);
+    showResult(total, parts);
+  };
+
+  function showResult(total, parts) {
+    $('result').classList.remove('hidden');
+    const needle = $('needle');
+    needle.style.left = '0%';
+    requestAnimationFrame(() => requestAnimationFrame(() => { needle.style.left = `calc(${total}% - 2px)`; }));
+    let v, color;
+    if (total < 35) { v = '✅ 진실 같아요'; color = 'var(--ok)'; }
+    else if (total < 60) { v = '🤔 애매한데요...'; color = 'var(--warn)'; }
+    else { v = '🚨 거짓말 의심!'; color = 'var(--bad)'; }
+    $('verdict').textContent = v; $('verdict').style.color = color;
+    $('pct').textContent = `거짓말 지수 ${total}%`;
+    $('detail').innerHTML = '';
+    for (const [name, pts, desc] of parts) {
+      const tr = document.createElement('tr');
+      const sign = pts > 0 ? '+' : '';
+      tr.innerHTML = `<td></td><td></td><td></td>`;
+      tr.children[0].textContent = name;
+      tr.children[1].textContent = desc;
+      tr.children[1].style.color = 'var(--muted)';
+      tr.children[2].textContent = `${sign}${pts.toFixed(0)}`;
+      tr.children[2].style.color = pts > 3 ? 'var(--bad)' : pts < -3 ? 'var(--ok)' : 'var(--muted)';
+      $('detail').appendChild(tr);
+    }
+    const q = $('question').value.trim() || '(질문 없음)';
+    history.unshift({ q, total, v });
+    const ul = $('histList'); ul.innerHTML = '';
+    for (const h of history.slice(0, 10)) {
+      const li = document.createElement('li');
+      const a = document.createElement('span'); a.textContent = h.q;
+      const b = document.createElement('span'); b.textContent = `${h.total}% ${h.v.split(' ')[0]}`;
+      li.append(a, b); ul.appendChild(li);
+    }
+    $('history').classList.remove('hidden');
+    $('question').value = '';
+    $('result').scrollIntoView({ behavior: 'smooth' });
+  }
+})();
+</script>
+</body>
+</html>
