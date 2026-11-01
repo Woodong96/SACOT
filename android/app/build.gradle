@@ -1,0 +1,38 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.woodong.liedetector'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.woodong.liedetector'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // 고정 키로 서명해서 새 버전을 지우지 않고 덮어 설치할 수 있게 함 (개인용)
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    // 웹앱(docs/index.html)을 그대로 앱 안에 포함
+    sourceSets {
+        main { assets.srcDirs = ['../../docs'] }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}

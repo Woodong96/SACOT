@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- 마이크 몸통 -->
+    <path android:fillColor="#4F8CFF"
+        android:pathData="M54,30a8,8 0,0 1,8 8v16a8,8 0,0 1,-16 0v-16a8,8 0,0 1,8 -8z" />
+    <!-- 마이크 받침 -->
+    <path android:strokeColor="#4F8CFF" android:strokeWidth="4" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M40,52a14,14 0,0 0,28 0M54,66v8M46,76h16" />
+    <!-- 파형 (빨강) -->
+    <path android:strokeColor="#E74C3C" android:strokeWidth="3" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M28,46v8M34,42v16M74,42v16M80,46v8" />
+</vector>
